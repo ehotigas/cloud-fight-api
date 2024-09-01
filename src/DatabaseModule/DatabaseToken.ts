@@ -1,4 +1,6 @@
 export enum DatabaseToken {
+    LOBBY_ADAPTER = "LOBBY_ADAPTER",
+    LOBBY_SERVICE = "LOBBY_SERVICE",
     USER_ADAPTER = "USER_ADAPTER",
     USER_SERVICE = "USER_SERVICE",
 }
