@@ -1,9 +1,9 @@
-import { LobbyServiceInterface } from "./LobbyService";
 import { RequestError } from "src/types/RequestError";
 import { UpdateLobbyDto } from "./dto/UpdateLobbyDto";
 import { CreateLobbyDto } from "./dto/CreateLobbyDto";
 import { DatabaseToken } from "../DatabaseToken";
 import { GetLobbyDto } from "./dto/GetLobbyDto";
+import { ILobbyService } from "./LobbyService";
 import { Lobby } from "./Lobby";
 import {
     ApiBody,
@@ -29,7 +29,7 @@ import {
 export class LobbyController {
     public constructor(
         @Inject(DatabaseToken.LOBBY_SERVICE)
-        private readonly service: LobbyServiceInterface
+        private readonly service: ILobbyService
     ) {  }
 
     @Get("/")

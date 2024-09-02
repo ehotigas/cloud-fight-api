@@ -1,9 +1,9 @@
 import { RequestError } from "src/types/RequestError";
-import { UserServiceInterface } from "./UserService";
 import { CreateUserDto } from "./dto/CreateUserDto";
 import { UpdateUserDto } from "./dto/UpdateUserDto";
 import { DatabaseToken } from "../DatabaseToken";
 import { GetUserDto } from "./dto/GetUserDto";
+import { IUserService } from "./UserService";
 import { User } from "./User";
 import {
     ApiResponse,
@@ -27,7 +27,7 @@ import {
 export class UserController {
     public constructor(
         @Inject(DatabaseToken.USER_SERVICE)
-        private readonly service: UserServiceInterface
+        private readonly service: IUserService
     ) {  }
 
     @Get("/")

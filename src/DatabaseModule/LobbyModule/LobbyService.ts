@@ -1,13 +1,13 @@
-import { LobbyAdapterInterface } from "./LobbyAdapter";
 import { CreateLobbyDto } from "./dto/CreateLobbyDto";
 import { RequestError } from "src/types/RequestError";
 import { UpdateLobbyDto } from "./dto/UpdateLobbyDto";
 import { Inject, Injectable } from "@nestjs/common";
 import { DatabaseToken } from "../DatabaseToken";
 import { GetLobbyDto } from "./dto/GetLobbyDto";
+import { ILobbyAdapter } from "./LobbyAdapter";
 import { Lobby } from "./Lobby";
 
-export interface LobbyServiceInterface {
+export interface ILobbyService {
     findAll: () => Promise<GetLobbyDto | RequestError>
     findById: (id: string) => Promise<Lobby | RequestError>
     save: (input: CreateLobbyDto) => Promise<Lobby | RequestError>
@@ -16,10 +16,10 @@ export interface LobbyServiceInterface {
 }
 
 @Injectable()
-export class LobbyService implements LobbyServiceInterface {
+export class LobbyService implements ILobbyService {
     public constructor(
         @Inject(DatabaseToken.LOBBY_ADAPTER)
-        private readonly adapter: LobbyAdapterInterface
+        private readonly adapter: ILobbyAdapter
     ) {  }
 
     public async findAll(): Promise<GetLobbyDto | RequestError> {

@@ -1,13 +1,13 @@
 import { RequestError } from "src/types/RequestError";
-import { UserAdapterInterface } from "./UserAdapter";
 import { CreateUserDto } from "./dto/CreateUserDto";
 import { Inject, Injectable } from "@nestjs/common";
+import { UpdateUserDto } from "./dto/UpdateUserDto";
 import { DatabaseToken } from "../DatabaseToken";
 import { GetUserDto } from "./dto/GetUserDto";
+import { IUserAdapter } from "./UserAdapter";
 import { User } from "./User";
-import { UpdateUserDto } from "./dto/UpdateUserDto";
 
-export interface UserServiceInterface {
+export interface IUserService {
     findAll: () => Promise<GetUserDto | RequestError>
     findById: (id: string) => Promise<User | RequestError>
     findUsername: (username: string) => Promise<User | RequestError>
@@ -18,10 +18,10 @@ export interface UserServiceInterface {
 }
 
 @Injectable()
-export class UserService implements UserServiceInterface {
+export class UserService implements IUserService {
     public constructor(
         @Inject(DatabaseToken.USER_ADAPTER)
-        private readonly adapter: UserAdapterInterface
+        private readonly adapter: IUserAdapter
     ) {  }
 
     public async findAll(): Promise<GetUserDto | RequestError> {

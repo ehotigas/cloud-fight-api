@@ -7,6 +7,9 @@ export class RequestError {
     @ApiProperty({ type: Number })
     statusCode: number;
 
+    @ApiProperty({ type: String })
+    error: string;
+
     public constructor(
         message: string,
         statusCode: number = 500

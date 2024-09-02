@@ -4,7 +4,7 @@ import { Injectable } from "@nestjs/common";
 import { Model } from "mongoose";
 import { User } from "./User";
 
-export interface UserAdapterInterface {
+export interface IUserAdapter {
     findAll: () => Promise<User[] | RequestError>
     findById: (id: string) => Promise<User | RequestError>
     findUsername: (username: string) => Promise<User | RequestError>
@@ -15,7 +15,7 @@ export interface UserAdapterInterface {
 }
 
 @Injectable()
-export class UserAdapter implements UserAdapterInterface {
+export class UserAdapter implements IUserAdapter {
     public constructor(
         @InjectModel(User.name)
         private readonly userModel: Model<User>

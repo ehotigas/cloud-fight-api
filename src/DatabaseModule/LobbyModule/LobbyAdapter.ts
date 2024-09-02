@@ -4,7 +4,7 @@ import { Injectable } from "@nestjs/common";
 import { Model } from "mongoose";
 import { Lobby } from "./Lobby";
 
-export interface LobbyAdapterInterface {
+export interface ILobbyAdapter {
     findAll: () => Promise<Lobby[] | RequestError>
     findById: (id: string) => Promise<Lobby | RequestError>
     save: (input: Omit<Lobby, "_id">) => Promise<Lobby | RequestError>
@@ -13,7 +13,7 @@ export interface LobbyAdapterInterface {
 }
 
 @Injectable()
-export class LobbyAdapter implements LobbyAdapterInterface {
+export class LobbyAdapter implements ILobbyAdapter {
     public constructor(
         @InjectModel(Lobby.name)
         private readonly lobbyModel: Model<Lobby>
