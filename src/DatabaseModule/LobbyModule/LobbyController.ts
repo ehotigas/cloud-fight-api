@@ -16,6 +16,7 @@ import {
     Controller,
     Delete,
     Get,
+    HttpStatus,
     Inject,
     Param,
     Patch,
@@ -34,11 +35,13 @@ export class LobbyController {
 
     @Get("/")
     @ApiResponse({
-        status: 200,
+        status: HttpStatus.OK,
+        description: "Ok",
         type: GetLobbyDto
     })
     @ApiResponse({
-        status: 500,
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        description: "Internal Server Error",
         type: RequestError
     })
     public async getAll(): Promise<GetLobbyDto | RequestError> {
@@ -51,11 +54,18 @@ export class LobbyController {
         type: String
     })
     @ApiResponse({
-        status: 200,
+        status: HttpStatus.OK,
+        description: "Ok",
         type: Lobby
     })
     @ApiResponse({
-        status: 500,
+        status: HttpStatus.NOT_FOUND,
+        description: "Not Found",
+        type: RequestError
+    })
+    @ApiResponse({
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        description: "Internal Server Error",
         type: RequestError
     })
     public async getById(
@@ -67,11 +77,13 @@ export class LobbyController {
     @Post("/")
     @ApiBody({ type: CreateLobbyDto })
     @ApiResponse({
-        status: 201,
-        type: Lobby
+        status: HttpStatus.CREATED,
+        description: "Created",
+        type: GetLobbyDto
     })
     @ApiResponse({
-        status: 500,
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        description: "Internal Server Error",
         type: RequestError
     })
     public async post(
@@ -87,11 +99,18 @@ export class LobbyController {
         type: String
     })
     @ApiResponse({
-        status: 201,
+        status: HttpStatus.CREATED,
+        description: "Created",
         type: Lobby
     })
     @ApiResponse({
-        status: 500,
+        status: HttpStatus.NOT_FOUND,
+        description: "Not Found",
+        type: RequestError
+    })
+    @ApiResponse({
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        description: "Internal Server Error",
         type: RequestError
     })
     public async patch(
@@ -107,11 +126,18 @@ export class LobbyController {
         type: String
     })
     @ApiResponse({
-        status: 204,
+        status: HttpStatus.OK,
+        description: "Ok",
         type: Lobby
     })
     @ApiResponse({
-        status: 500,
+        status: HttpStatus.NOT_FOUND,
+        description: "Not Found",
+        type: RequestError
+    })
+    @ApiResponse({
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        description: "Internal Server Error",
         type: RequestError
     })
     public async delete(

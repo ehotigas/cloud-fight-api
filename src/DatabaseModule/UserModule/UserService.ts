@@ -41,6 +41,7 @@ export class UserService implements IUserService {
         this.logger.log(`Feching user with id: ${id}`);
         const user = await this.adapter.findById(id);
         if (!user) {
+            this.logger.warn(`User with id: ${id} not found`);
             throw new HttpException(`User (id: ${id}) not found exception`, HttpStatus.NOT_FOUND);
         }
         return user;
@@ -50,6 +51,7 @@ export class UserService implements IUserService {
         this.logger.log(`Feching user with username: ${username}`);
         const user = await this.adapter.findUsername(username);
         if (!user) {
+            this.logger.warn(`User with username: ${username} not found`);
             throw new HttpException(`User (username: ${username}) not found exception`, HttpStatus.NOT_FOUND);
         }
         return user;
@@ -59,6 +61,7 @@ export class UserService implements IUserService {
         this.logger.log(`Feching user with email: ${email}`);
         const user =  await this.adapter.findByEmail(email);
         if (!user) {
+            this.logger.warn(`User with email: ${email} not found`);
             throw new HttpException(`User (email: ${email}) not found exception`, HttpStatus.NOT_FOUND);
         }
         return user;
@@ -81,6 +84,7 @@ export class UserService implements IUserService {
         this.logger.log(`Updating user with id: ${id}`);
         const user = await this.adapter.update(id, { ...input, updatedAt: new Date() });
         if (!user) {
+            this.logger.warn(`User with id: ${id} not found`);
             throw new HttpException(`User (id: ${id}) not found exception`, HttpStatus.NOT_FOUND);
         }
         return user;
@@ -93,6 +97,7 @@ export class UserService implements IUserService {
             deletedAt: new Date()
         });
         if (!user) {
+            this.logger.warn(`User with id: ${id} not found`);
             throw new HttpException(`User (id: ${id}) not found exception`, HttpStatus.NOT_FOUND);
         }
         return user;

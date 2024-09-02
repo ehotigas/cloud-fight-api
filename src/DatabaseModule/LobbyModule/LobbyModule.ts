@@ -1,3 +1,4 @@
+import { LoggerModule } from "src/LoggerModule/LoggerModule";
 import { LobbyController } from "./LobbyController";
 import { MongooseModule } from "@nestjs/mongoose";
 import { DatabaseToken } from "../DatabaseToken";
@@ -10,7 +11,8 @@ import { Module } from "@nestjs/common";
     imports: [
         MongooseModule.forFeature([
             { name: Lobby.name, schema: LobbySchema }
-        ])
+        ]),
+        LoggerModule
     ],
     controllers: [ LobbyController ],
     providers: [
