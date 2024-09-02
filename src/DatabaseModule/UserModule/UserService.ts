@@ -1,52 +1,71 @@
-import { RequestError } from "src/types/RequestError";
+import { HttpException, HttpStatus, Inject, Injectable, Logger } from "@nestjs/common";
+import { ILoggerFactory } from "src/LoggerModule/LoggerFactory";
 import { CreateUserDto } from "./dto/CreateUserDto";
-import { Inject, Injectable } from "@nestjs/common";
 import { UpdateUserDto } from "./dto/UpdateUserDto";
 import { DatabaseToken } from "../DatabaseToken";
 import { GetUserDto } from "./dto/GetUserDto";
 import { IUserAdapter } from "./UserAdapter";
+import { AppToken } from "src/AppToken";
 import { User } from "./User";
 
 export interface IUserService {
-    findAll: () => Promise<GetUserDto | RequestError>
-    findById: (id: string) => Promise<User | RequestError>
-    findUsername: (username: string) => Promise<User | RequestError>
-    findByEmail: (email: string) => Promise<User | RequestError>
-    save: (input: CreateUserDto) => Promise<User | RequestError>
-    update: (id: string, input: UpdateUserDto) => Promise<User | RequestError>
-    remove: (id: string) => Promise<User | RequestError>
+    findAll: () => Promise<GetUserDto>
+    findById: (id: string) => Promise<User>
+    findUsername: (username: string) => Promise<User>
+    findByEmail: (email: string) => Promise<User>
+    save: (input: CreateUserDto) => Promise<User>
+    update: (id: string, input: UpdateUserDto) => Promise<User>
+    remove: (id: string) => Promise<User>
 }
 
 @Injectable()
 export class UserService implements IUserService {
+    private readonly logger: Logger;
     public constructor(
         @Inject(DatabaseToken.USER_ADAPTER)
-        private readonly adapter: IUserAdapter
-    ) {  }
+        private readonly adapter: IUserAdapter,
+        @Inject(AppToken.LOGGER_FACTORY)
+        loggerFactory: ILoggerFactory
+    ) {
+        this.logger = loggerFactory.getLogger("UserService");
+    }
 
-    public async findAll(): Promise<GetUserDto | RequestError> {
-        const data = await this.adapter.findAll();
-        if (data instanceof RequestError) {
-            return data;
-        }
+    public async findAll(): Promise<GetUserDto> {
+        this.logger.log(`Feching all users`);
         return {
-            users: data
+            users: await this.adapter.findAll()
         };
     }
 
-    public async findById(id: string): Promise<User | RequestError> {
-        return await this.adapter.findById(id);
+    public async findById(id: string): Promise<User> {
+        this.logger.log(`Feching user with id: ${id}`);
+        const user = await this.adapter.findById(id);
+        if (!user) {
+            throw new HttpException(`User (id: ${id}) not found exception`, HttpStatus.NOT_FOUND);
+        }
+        return user;
     }
 
-    public async findUsername(username: string): Promise<User | RequestError> {
-        return await this.adapter.findUsername(username);
+    public async findUsername(username: string): Promise<User> {
+        this.logger.log(`Feching user with username: ${username}`);
+        const user = await this.adapter.findUsername(username);
+        if (!user) {
+            throw new HttpException(`User (username: ${username}) not found exception`, HttpStatus.NOT_FOUND);
+        }
+        return user;
     }
 
-    public async findByEmail(email: string): Promise<User | RequestError> {
-        return await this.adapter.findByEmail(email);
+    public async findByEmail(email: string): Promise<User> {
+        this.logger.log(`Feching user with email: ${email}`);
+        const user =  await this.adapter.findByEmail(email);
+        if (!user) {
+            throw new HttpException(`User (email: ${email}) not found exception`, HttpStatus.NOT_FOUND);
+        }
+        return user;
     }
 
-    public async save(input: CreateUserDto): Promise<User | RequestError> {
+    public async save(input: CreateUserDto): Promise<User> {
+        this.logger.log(`Saving user`);
         const now = new Date();
         return await this.adapter.save({
             ...input,
@@ -58,15 +77,25 @@ export class UserService implements IUserService {
         });
     }
 
-    public async update(id: string, input: UpdateUserDto): Promise<User | RequestError> {
-        return await this.adapter.update(id, { ...input, updatedAt: new Date() });
+    public async update(id: string, input: UpdateUserDto): Promise<User> {
+        this.logger.log(`Updating user with id: ${id}`);
+        const user = await this.adapter.update(id, { ...input, updatedAt: new Date() });
+        if (!user) {
+            throw new HttpException(`User (id: ${id}) not found exception`, HttpStatus.NOT_FOUND);
+        }
+        return user;
     }
 
-    public async remove(id: string): Promise<User | RequestError> {
-        return await this.adapter.update(id, {
+    public async remove(id: string): Promise<User> {
+        this.logger.log(`Removing user with id: ${id}`);
+        const user = await this.adapter.update(id, {
             deleted: true,
             deletedAt: new Date()
         });
+        if (!user) {
+            throw new HttpException(`User (id: ${id}) not found exception`, HttpStatus.NOT_FOUND);
+        }
+        return user;
     }
 
 }

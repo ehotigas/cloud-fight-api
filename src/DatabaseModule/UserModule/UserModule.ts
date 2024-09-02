@@ -1,3 +1,4 @@
+import { LoggerModule } from "src/LoggerModule/LoggerModule";
 import { MongooseModule } from "@nestjs/mongoose";
 import { UserController } from "./UserController";
 import { DatabaseToken } from "../DatabaseToken";
@@ -10,7 +11,8 @@ import { Module } from "@nestjs/common";
     imports: [
         MongooseModule.forFeature([
             { name: User.name, schema: UserSchema }
-        ])
+        ]),
+        LoggerModule
     ],
     controllers: [ UserController ],
     providers: [

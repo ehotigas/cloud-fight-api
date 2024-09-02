@@ -6,6 +6,8 @@ import { GetUserDto } from "./dto/GetUserDto";
 import { IUserService } from "./UserService";
 import { User } from "./User";
 import {
+    ApiBody,
+    ApiParam,
     ApiResponse,
     ApiTags
 } from "@nestjs/swagger";
@@ -14,6 +16,7 @@ import {
     Controller,
     Delete,
     Get,
+    HttpStatus,
     Inject,
     Param,
     Patch,
@@ -32,11 +35,12 @@ export class UserController {
 
     @Get("/")
     @ApiResponse({
-        status: 200,
+        status: HttpStatus.OK,
         type: GetUserDto
     })
     @ApiResponse({
-        status: 500,
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        description: "Internal Server Error",
         type: RequestError
     })
     public async getAll(): Promise<GetUserDto | RequestError> {
@@ -44,12 +48,22 @@ export class UserController {
     }
 
     @Get("/:id")
+    @ApiParam({
+        name: "id",
+        type: String
+    })
     @ApiResponse({
-        status: 200,
+        status: HttpStatus.OK,
         type: User
     })
     @ApiResponse({
-        status: 500,
+        status: HttpStatus.NOT_FOUND,
+        description: "Not Found",
+        type: RequestError
+    })
+    @ApiResponse({
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        description: "Internal Server Error",
         type: RequestError
     })
     public async getById(
@@ -59,12 +73,22 @@ export class UserController {
     }
 
     @Get("/username/:username")
+    @ApiParam({
+        name: "username",
+        type: String
+    })
     @ApiResponse({
-        status: 200,
+        status: HttpStatus.OK,
         type: User
     })
     @ApiResponse({
-        status: 500,
+        status: HttpStatus.NOT_FOUND,
+        description: "Not Found",
+        type: RequestError
+    })
+    @ApiResponse({
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        description: "Internal Server Error",
         type: RequestError
     })
     public async getUsername(
@@ -74,12 +98,22 @@ export class UserController {
     }
 
     @Get("/email/:email")
+    @ApiParam({
+        name: "email",
+        type: String
+    })
     @ApiResponse({
-        status: 200,
+        status: HttpStatus.OK,
         type: User
     })
     @ApiResponse({
-        status: 500,
+        status: HttpStatus.NOT_FOUND,
+        description: "Not Found",
+        type: RequestError
+    })
+    @ApiResponse({
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        description: "Internal Server Error",
         type: RequestError
     })
     public async getByEmail(
@@ -89,12 +123,14 @@ export class UserController {
     }
 
     @Post("/")
+    @ApiBody({ type: CreateUserDto })
     @ApiResponse({
-        status: 201,
+        status: HttpStatus.CREATED,
         type: User
     })
     @ApiResponse({
-        status: 500,
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        description: "Internal Server Error",
         type: RequestError
     })
     public async post(
@@ -104,12 +140,19 @@ export class UserController {
     }
 
     @Patch("/")
+    @ApiBody({ type: UpdateUserDto })
     @ApiResponse({
-        status: 201,
+        status: HttpStatus.CREATED,
         type: User
     })
     @ApiResponse({
-        status: 500,
+        status: HttpStatus.NOT_FOUND,
+        description: "Not Found",
+        type: RequestError
+    })
+    @ApiResponse({
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        description: "Internal Server Error",
         type: RequestError
     })
     public async patch(
@@ -121,11 +164,17 @@ export class UserController {
 
     @Delete("/")
     @ApiResponse({
-        status: 204,
+        status: HttpStatus.OK,
         type: User
     })
     @ApiResponse({
-        status: 500,
+        status: HttpStatus.NOT_FOUND,
+        description: "Not Found",
+        type: RequestError
+    })
+    @ApiResponse({
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        description: "Internal Server Error",
         type: RequestError
     })
     public async delete(
