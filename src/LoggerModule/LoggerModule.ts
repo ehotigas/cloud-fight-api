@@ -8,6 +8,9 @@ import { LoggerFactory } from "./LoggerFactory";
             provide: AppToken.LOGGER_FACTORY,
             useClass: LoggerFactory
         }
+    ],
+    exports: [
+        AppToken.LOGGER_FACTORY
     ]
 })
 export class LoggerModule {

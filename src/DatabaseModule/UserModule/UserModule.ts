@@ -24,6 +24,10 @@ import { Module } from "@nestjs/common";
             provide: DatabaseToken.USER_SERVICE,
             useClass: UserService
         }
+    ],
+    exports: [
+        DatabaseToken.USER_ADAPTER,
+        DatabaseToken.USER_SERVICE,
     ]
 })
 export class UserModule {

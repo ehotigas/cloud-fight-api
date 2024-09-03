@@ -27,7 +27,7 @@ export class LobbyAdapter implements ILobbyAdapter {
 
     public async findAll(): Promise<Lobby[]> {
         try {
-            return await this.lobbyModel.find();
+            return await this.lobbyModel.find().populate("lobbyUsers").exec();
         }
         catch (error) {
             this.logger.error(`Fail to find all lobby`, error);
