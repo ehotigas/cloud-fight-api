@@ -1,4 +1,3 @@
-import { RequestError } from "src/types/RequestError";
 import { CreateUserDto } from "./dto/CreateUserDto";
 import { UpdateUserDto } from "./dto/UpdateUserDto";
 import { DatabaseToken } from "../DatabaseToken";
@@ -18,6 +17,8 @@ import {
     Get,
     HttpStatus,
     Inject,
+    InternalServerErrorException,
+    NotFoundException,
     Param,
     Patch,
     Post,
@@ -41,9 +42,9 @@ export class UserController {
     @ApiResponse({
         status: HttpStatus.INTERNAL_SERVER_ERROR,
         description: "Internal Server Error",
-        type: RequestError
+        type: InternalServerErrorException
     })
-    public async getAll(): Promise<GetUserDto | RequestError> {
+    public async getAll(): Promise<GetUserDto> {
         return await this.service.findAll();
     }
 
@@ -59,16 +60,16 @@ export class UserController {
     @ApiResponse({
         status: HttpStatus.NOT_FOUND,
         description: "Not Found",
-        type: RequestError
+        type: NotFoundException
     })
     @ApiResponse({
         status: HttpStatus.INTERNAL_SERVER_ERROR,
         description: "Internal Server Error",
-        type: RequestError
+        type: InternalServerErrorException
     })
     public async getById(
         @Param("id") id: string
-    ): Promise<User | RequestError> {
+    ): Promise<User> {
         return await this.service.findById(id);
     }
 
@@ -84,16 +85,16 @@ export class UserController {
     @ApiResponse({
         status: HttpStatus.NOT_FOUND,
         description: "Not Found",
-        type: RequestError
+        type: NotFoundException
     })
     @ApiResponse({
         status: HttpStatus.INTERNAL_SERVER_ERROR,
         description: "Internal Server Error",
-        type: RequestError
+        type: InternalServerErrorException
     })
     public async getUsername(
         @Param("username") username: string
-    ): Promise<User | RequestError> {
+    ): Promise<User> {
         return await this.service.findUsername(username);
     }
 
@@ -109,16 +110,16 @@ export class UserController {
     @ApiResponse({
         status: HttpStatus.NOT_FOUND,
         description: "Not Found",
-        type: RequestError
+        type: NotFoundException
     })
     @ApiResponse({
         status: HttpStatus.INTERNAL_SERVER_ERROR,
         description: "Internal Server Error",
-        type: RequestError
+        type: InternalServerErrorException
     })
     public async getByEmail(
         @Param("email") email: string
-    ): Promise<User | RequestError> {
+    ): Promise<User> {
         return await this.service.findByEmail(email);
     }
 
@@ -131,11 +132,11 @@ export class UserController {
     @ApiResponse({
         status: HttpStatus.INTERNAL_SERVER_ERROR,
         description: "Internal Server Error",
-        type: RequestError
+        type: InternalServerErrorException
     })
     public async post(
         @Body(new ValidationPipe()) input: CreateUserDto
-    ): Promise<User | RequestError> {
+    ): Promise<User> {
         return await this.service.save(input);
     }
 
@@ -148,17 +149,17 @@ export class UserController {
     @ApiResponse({
         status: HttpStatus.NOT_FOUND,
         description: "Not Found",
-        type: RequestError
+        type: NotFoundException
     })
     @ApiResponse({
         status: HttpStatus.INTERNAL_SERVER_ERROR,
         description: "Internal Server Error",
-        type: RequestError
+        type: InternalServerErrorException
     })
     public async patch(
         @Param("id") id: string,
         @Body(new ValidationPipe()) input: UpdateUserDto
-    ): Promise<User | RequestError> {
+    ): Promise<User> {
         return await this.service.update(id, input);
     }
 
@@ -170,16 +171,16 @@ export class UserController {
     @ApiResponse({
         status: HttpStatus.NOT_FOUND,
         description: "Not Found",
-        type: RequestError
+        type: NotFoundException
     })
     @ApiResponse({
         status: HttpStatus.INTERNAL_SERVER_ERROR,
         description: "Internal Server Error",
-        type: RequestError
+        type: InternalServerErrorException
     })
     public async delete(
         @Param("id") id: string
-    ): Promise<User | RequestError> {
+    ): Promise<User> {
         return await this.service.remove(id);
     }
 }

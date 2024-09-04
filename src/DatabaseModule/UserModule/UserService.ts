@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Inject, Injectable, Logger } from "@nestjs/common";
+import { Inject, Injectable, Logger, NotFoundException } from "@nestjs/common";
 import { ILoggerFactory } from "src/LoggerModule/LoggerFactory";
 import { CreateUserDto } from "./dto/CreateUserDto";
 import { UpdateUserDto } from "./dto/UpdateUserDto";
@@ -42,7 +42,7 @@ export class UserService implements IUserService {
         const user = await this.adapter.findById(id);
         if (!user) {
             this.logger.warn(`User with id: ${id} not found`);
-            throw new HttpException(`User (id: ${id}) not found exception`, HttpStatus.NOT_FOUND);
+            throw new NotFoundException(`User (id: ${id}) not found exception`);
         }
         return user;
     }
@@ -52,7 +52,7 @@ export class UserService implements IUserService {
         const user = await this.adapter.findUsername(username);
         if (!user) {
             this.logger.warn(`User with username: ${username} not found`);
-            throw new HttpException(`User (username: ${username}) not found exception`, HttpStatus.NOT_FOUND);
+            throw new NotFoundException(`User (username: ${username}) not found exception`);
         }
         return user;
     }
@@ -62,7 +62,7 @@ export class UserService implements IUserService {
         const user =  await this.adapter.findByEmail(email);
         if (!user) {
             this.logger.warn(`User with email: ${email} not found`);
-            throw new HttpException(`User (email: ${email}) not found exception`, HttpStatus.NOT_FOUND);
+            throw new NotFoundException(`User (email: ${email}) not found exception`);
         }
         return user;
     }
@@ -85,7 +85,7 @@ export class UserService implements IUserService {
         const user = await this.adapter.update(id, { ...input, updatedAt: new Date() });
         if (!user) {
             this.logger.warn(`User with id: ${id} not found`);
-            throw new HttpException(`User (id: ${id}) not found exception`, HttpStatus.NOT_FOUND);
+            throw new NotFoundException(`User (id: ${id}) not found exception`);
         }
         return user;
     }
@@ -98,7 +98,7 @@ export class UserService implements IUserService {
         });
         if (!user) {
             this.logger.warn(`User with id: ${id} not found`);
-            throw new HttpException(`User (id: ${id}) not found exception`, HttpStatus.NOT_FOUND);
+            throw new NotFoundException(`User (id: ${id}) not found exception`);
         }
         return user;
     }

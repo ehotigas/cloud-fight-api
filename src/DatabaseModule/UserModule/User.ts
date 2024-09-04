@@ -40,6 +40,18 @@ export class User {
     @ApiProperty({ type: Boolean })
     @Prop()
     admin: boolean;
+
+    public constructor(user?: Partial<User>) {
+        this._id = user?._id;
+        this.username = user?.username;
+        this.email = user?.email;
+        this.password = user?.password;
+        this.createdAt = user?.createdAt;
+        this.updatedAt = user?.updatedAt;
+        this.deleted = user?.deleted;
+        this.deletedAt = user?.deletedAt;
+        this.admin = user?.admin;
+    }
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

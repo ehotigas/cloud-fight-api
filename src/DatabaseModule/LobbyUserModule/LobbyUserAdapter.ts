@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Inject, Injectable, Logger } from "@nestjs/common";
+import { Inject, Injectable, InternalServerErrorException, Logger } from "@nestjs/common";
 import { ILoggerFactory } from "src/LoggerModule/LoggerFactory";
 import { InjectModel } from "@nestjs/mongoose";
 import { AppToken } from "src/AppToken";
@@ -31,7 +31,7 @@ export class LobbyUserAdapter implements ILobbyUserAdapter {
         }
         catch (error) {
             this.logger.error("Fail to find all lobby users", error);
-            throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new InternalServerErrorException(error.message);
         }
     }
 
@@ -41,7 +41,7 @@ export class LobbyUserAdapter implements ILobbyUserAdapter {
         }
         catch (error) {
             this.logger.error(`Fail to find lobby user id: ${id}`, error);
-            throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new InternalServerErrorException(error.message);
         }
     }
 
@@ -51,7 +51,7 @@ export class LobbyUserAdapter implements ILobbyUserAdapter {
         }
         catch (error) {
             this.logger.error(`Fail to save lobby user`, error);
-            throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new InternalServerErrorException(error.message);
         }
     }
 
@@ -61,7 +61,7 @@ export class LobbyUserAdapter implements ILobbyUserAdapter {
         }
         catch (error) {
             this.logger.error(`Fail to update lobby user id: ${id}`, error);
-            throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new InternalServerErrorException(error.message);
         }
     }
 
@@ -71,7 +71,7 @@ export class LobbyUserAdapter implements ILobbyUserAdapter {
         }
         catch (error) {
             this.logger.error(`Fail to remove lobby user id: ${id}`, error);
-            throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new InternalServerErrorException(error.message);
         }
     }
 }

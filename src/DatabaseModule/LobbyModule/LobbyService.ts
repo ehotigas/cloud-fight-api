@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Inject, Injectable, Logger } from "@nestjs/common";
+import { Inject, Injectable, Logger, NotFoundException } from "@nestjs/common";
 import { ILoggerFactory } from "src/LoggerModule/LoggerFactory";
 import { CreateLobbyDto } from "./dto/CreateLobbyDto";
 import { UpdateLobbyDto } from "./dto/UpdateLobbyDto";
@@ -40,7 +40,7 @@ export class LobbyService implements ILobbyService {
         const lobby = await this.adapter.findById(id);
         if (!lobby) {
             this.logger.warn(`Lobby with id: ${id} not found`);
-            throw new HttpException(`Lobby (id: ${id}) not found`, HttpStatus.NOT_FOUND);
+            throw new NotFoundException(`Lobby (id: ${id}) not found`);
         }
         return lobby;
     }
@@ -58,7 +58,7 @@ export class LobbyService implements ILobbyService {
         const lobby = await this.adapter.update(id, input);
         if (!lobby) {
             this.logger.warn(`Lobby with id: ${id} not found`);
-            throw new HttpException(`Lobby (id: ${id}) not found`, HttpStatus.NOT_FOUND);
+            throw new NotFoundException(`Lobby (id: ${id}) not found`);
         }
         return lobby;
     }
@@ -68,7 +68,7 @@ export class LobbyService implements ILobbyService {
         const lobby = await this.adapter.remove(id);
         if (!lobby) {
             this.logger.warn(`Lobby with id: ${id} not found`);
-            throw new HttpException(`Lobby (id: ${id}) not found`, HttpStatus.NOT_FOUND);
+            throw new NotFoundException(`Lobby (id: ${id}) not found`);
         }
         return lobby;
     }

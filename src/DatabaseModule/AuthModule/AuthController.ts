@@ -1,6 +1,5 @@
 import { CreateUserDto } from "../UserModule/dto/CreateUserDto";
 import { SignInResponseDto } from "./dto/SignInResponseDto";
-import { RequestError } from "src/types/RequestError";
 import { DatabaseToken } from "../DatabaseToken";
 import { IAuthService } from "./AuthService";
 import { SignInDto } from "./dto/SignInDto";
@@ -11,10 +10,13 @@ import {
     ApiTags
 } from "@nestjs/swagger";
 import {
+    BadRequestException,
     Body,
     Controller,
     HttpStatus,
     Inject,
+    InternalServerErrorException,
+    NotFoundException,
     Post,
     ValidationPipe
 } from "@nestjs/common";
@@ -37,12 +39,12 @@ export class AuthController {
     @ApiResponse({
         status: HttpStatus.NOT_FOUND,
         description: "Not Found",
-        type: RequestError
+        type: NotFoundException
     })
     @ApiResponse({
         status: HttpStatus.INTERNAL_SERVER_ERROR,
         description: "Internal Server Error",
-        type: RequestError
+        type: InternalServerErrorException
     })
     public async signIn(
         @Body(new ValidationPipe()) input: SignInDto
@@ -60,17 +62,17 @@ export class AuthController {
     @ApiResponse({
         status: HttpStatus.BAD_REQUEST,
         description: "Username already exists",
-        type: RequestError
+        type: BadRequestException
     })
     @ApiResponse({
         status: HttpStatus.BAD_REQUEST,
         description: "Email already exists",
-        type: RequestError
+        type: BadRequestException
     })
     @ApiResponse({
         status: HttpStatus.INTERNAL_SERVER_ERROR,
         description: "Internal Server Error",
-        type: RequestError
+        type: InternalServerErrorException
     })
     public async signUp(
         @Body(new ValidationPipe()) input: CreateUserDto

@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Inject, Injectable, Logger } from "@nestjs/common";
+import { Inject, Injectable, InternalServerErrorException, Logger } from "@nestjs/common";
 import { ILoggerFactory } from "src/LoggerModule/LoggerFactory";
 import { InjectModel } from "@nestjs/mongoose";
 import { AppToken } from "src/AppToken";
@@ -34,7 +34,7 @@ export class UserAdapter implements IUserAdapter {
         }
         catch(error) {
             this.logger.error("Fail to find all users", error.stack);
-            throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new InternalServerErrorException(error.message);
         }
     }
 
@@ -44,7 +44,7 @@ export class UserAdapter implements IUserAdapter {
         }
         catch(error) {
             this.logger.error(`Fail to find user id: ${id}`, error.stack);
-            throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new InternalServerErrorException(error.message);
         }
     }
 
@@ -54,7 +54,7 @@ export class UserAdapter implements IUserAdapter {
         }
         catch(error) {
             this.logger.error(`Fail to find username: ${username}`, error.stack);
-            throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new InternalServerErrorException(error.message);
         }
     }
 
@@ -64,7 +64,7 @@ export class UserAdapter implements IUserAdapter {
         }
         catch(error) {
             this.logger.error(`Fail to find user email: ${email}`, error.stack);
-            throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new InternalServerErrorException(error.message);
         }
     }
 
@@ -74,7 +74,7 @@ export class UserAdapter implements IUserAdapter {
         }
         catch(error) {
             this.logger.error(`Fail to save user`, error.stack);
-            throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new InternalServerErrorException(error.message);
         }
     }
 
@@ -84,7 +84,7 @@ export class UserAdapter implements IUserAdapter {
         }
         catch(error) {
             this.logger.error(`Fail to update user id: ${id}`, error.stack);
-            throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new InternalServerErrorException(error.message);
         }
     }
 
@@ -94,7 +94,7 @@ export class UserAdapter implements IUserAdapter {
         }
         catch(error) {
             this.logger.error(`Fail to remove user id: ${id}`, error.stack);
-            throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new InternalServerErrorException(error.message);
         }
     }
 

@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Inject, Injectable, Logger } from "@nestjs/common";
+import { Inject, Injectable, InternalServerErrorException, Logger } from "@nestjs/common";
 import { ILoggerFactory } from "src/LoggerModule/LoggerFactory";
 import { InjectModel } from "@nestjs/mongoose";
 import { AppToken } from "src/AppToken";
@@ -31,7 +31,7 @@ export class LobbyAdapter implements ILobbyAdapter {
         }
         catch (error) {
             this.logger.error(`Fail to find all lobby`, error);
-            throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new InternalServerErrorException(error.message);
         }
     }
 
@@ -41,7 +41,7 @@ export class LobbyAdapter implements ILobbyAdapter {
         }
         catch (error) {
             this.logger.error(`Fail to find lobby with id: ${id}`, error);
-            throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new InternalServerErrorException(error.message);
         }
     }
 
@@ -51,7 +51,7 @@ export class LobbyAdapter implements ILobbyAdapter {
         }
         catch (error) {
             this.logger.error(`Fail to save lobby`, error);
-            throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new InternalServerErrorException(error.message);
         }
     }
 
@@ -61,7 +61,7 @@ export class LobbyAdapter implements ILobbyAdapter {
         }
         catch (error) {
             this.logger.error(`Fail to update lobby with id: ${id}`, error);
-            throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new InternalServerErrorException(error.message);
         }
     }
 
@@ -71,7 +71,7 @@ export class LobbyAdapter implements ILobbyAdapter {
         }
         catch (error) {
             this.logger.error(`Fail to remove lobby with id: ${id}`, error);
-            throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new InternalServerErrorException(error.message);
         }
     }
 }

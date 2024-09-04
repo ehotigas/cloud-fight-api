@@ -1,4 +1,3 @@
-import { RequestError } from "src/types/RequestError";
 import { UpdateLobbyDto } from "./dto/UpdateLobbyDto";
 import { CreateLobbyDto } from "./dto/CreateLobbyDto";
 import { DatabaseToken } from "../DatabaseToken";
@@ -18,6 +17,8 @@ import {
     Get,
     HttpStatus,
     Inject,
+    InternalServerErrorException,
+    NotFoundException,
     Param,
     Patch,
     Post,
@@ -42,9 +43,9 @@ export class LobbyController {
     @ApiResponse({
         status: HttpStatus.INTERNAL_SERVER_ERROR,
         description: "Internal Server Error",
-        type: RequestError
+        type: InternalServerErrorException
     })
-    public async getAll(): Promise<GetLobbyDto | RequestError> {
+    public async getAll(): Promise<GetLobbyDto> {
         return await this.service.findAll();
     }
 
@@ -61,16 +62,16 @@ export class LobbyController {
     @ApiResponse({
         status: HttpStatus.NOT_FOUND,
         description: "Not Found",
-        type: RequestError
+        type: NotFoundException
     })
     @ApiResponse({
         status: HttpStatus.INTERNAL_SERVER_ERROR,
         description: "Internal Server Error",
-        type: RequestError
+        type: InternalServerErrorException
     })
     public async getById(
         @Param("id") id: string
-    ): Promise<Lobby | RequestError> {
+    ): Promise<Lobby> {
         return await this.service.findById(id);
     }
 
@@ -84,11 +85,11 @@ export class LobbyController {
     @ApiResponse({
         status: HttpStatus.INTERNAL_SERVER_ERROR,
         description: "Internal Server Error",
-        type: RequestError
+        type: InternalServerErrorException
     })
     public async post(
         @Body(new ValidationPipe()) input: CreateLobbyDto
-    ): Promise<Lobby | RequestError> {
+    ): Promise<Lobby> {
         return await this.service.save(input);
     }
 
@@ -106,17 +107,17 @@ export class LobbyController {
     @ApiResponse({
         status: HttpStatus.NOT_FOUND,
         description: "Not Found",
-        type: RequestError
+        type: NotFoundException
     })
     @ApiResponse({
         status: HttpStatus.INTERNAL_SERVER_ERROR,
         description: "Internal Server Error",
-        type: RequestError
+        type: InternalServerErrorException
     })
     public async patch(
         @Param("id") id: string,
         @Body(new ValidationPipe()) input: UpdateLobbyDto
-    ): Promise<Lobby | RequestError> {
+    ): Promise<Lobby> {
         return await this.service.update(id, input);
     }
 
@@ -133,16 +134,16 @@ export class LobbyController {
     @ApiResponse({
         status: HttpStatus.NOT_FOUND,
         description: "Not Found",
-        type: RequestError
+        type: NotFoundException
     })
     @ApiResponse({
         status: HttpStatus.INTERNAL_SERVER_ERROR,
         description: "Internal Server Error",
-        type: RequestError
+        type: InternalServerErrorException
     })
     public async delete(
         @Param("id") id: string
-    ): Promise<Lobby | RequestError> {
+    ): Promise<Lobby> {
         return await this.service.remove(id);
     }
 }
