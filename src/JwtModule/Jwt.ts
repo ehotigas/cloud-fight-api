@@ -5,7 +5,7 @@ import { AppToken } from "src/AppToken";
 export declare class IJwt {
     signAsync(payload: string): Promise<string>;
     signAsync(payload: Buffer | object): Promise<string>;
-    decode(token: string): Promise<object>;
+    decode<T extends object>(token: string): Promise<T>;
 }
 
 @Injectable()
@@ -27,7 +27,7 @@ export class Jwt {
         }
     }
 
-    public async decode(token: string): Promise<object> {
+    public async decode<T extends object>(token: string): Promise<T> {
         return await this.jwtService.verifyAsync(token, { secret: this.key });
     }
 }
