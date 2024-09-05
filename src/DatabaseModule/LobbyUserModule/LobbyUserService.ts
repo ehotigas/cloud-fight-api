@@ -10,12 +10,14 @@ import { LobbyUser } from "./LobbyUser";
 
 export interface ILobbyUserService {
     /**
+     * @async
      * @returns {Promise<GetLobbyUserDto>}
      * @throws {InternalServerErrorException}
      */
     findAll: () => Promise<GetLobbyUserDto>
 
     /**
+     * @async
      * @param {string} id 
      * @returns {Promise<LobbyUser>}
      * @throws {InternalServerErrorException}
@@ -24,6 +26,7 @@ export interface ILobbyUserService {
     findById: (id: string) => Promise<LobbyUser>
 
     /**
+     * @async
      * @param {CreateLobbyuserDto} input 
      * @returns {Promise<LobbyUser>}
      * @throws {InternalServerErrorException}
@@ -31,6 +34,7 @@ export interface ILobbyUserService {
     save: (input: CreateLobbyuserDto) => Promise<LobbyUser>
 
     /**
+     * @async
      * @param {string} id 
      * @param {UpdateLobbyUserDto} input 
      * @returns {Promise<LobbyUser>}
@@ -40,6 +44,7 @@ export interface ILobbyUserService {
     update: (id: string, input: UpdateLobbyUserDto) => Promise<LobbyUser>
 
     /**
+     * @async
      * @param {string} id 
      * @returns {Promise<LobbyUser>}
      * @throws {InternalServerErrorException}

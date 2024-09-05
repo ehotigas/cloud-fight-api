@@ -10,12 +10,14 @@ import { User } from "./User";
 
 export interface IUserService {
     /**
+     * @async
      * @returns {Promise<GetUserDto>}
      * @throws {InternalServerErrorException}
      */
     findAll: () => Promise<GetUserDto>
 
     /**
+     * @async
      * @param {string} id 
      * @returns {Promise<User>}
      * @throws {InternalServerErrorException}
@@ -24,6 +26,7 @@ export interface IUserService {
     findById: (id: string) => Promise<User>
 
     /**
+     * @async
      * @param {string} username 
      * @returns {Promise<User>}
      * @throws {InternalServerErrorException}
@@ -32,6 +35,7 @@ export interface IUserService {
     findUsername: (username: string) => Promise<User>
 
     /**
+     * @async
      * @param {string} email
      * @returns {Promise<User>}
      * @throws {InternalServerErrorException}
@@ -40,6 +44,7 @@ export interface IUserService {
     findByEmail: (email: string) => Promise<User>
 
     /**
+     * @async
      * @param {CreateUserDto} input 
      * @returns {Promise<User>}
      * @throws {InternalServerErrorException}
@@ -47,6 +52,7 @@ export interface IUserService {
     save: (input: CreateUserDto) => Promise<User>
 
     /**
+     * @async
      * @param {string} id 
      * @param {UpdateUserDto} input 
      * @returns {Promise<User>}
@@ -56,6 +62,7 @@ export interface IUserService {
     update: (id: string, input: UpdateUserDto) => Promise<User>
 
     /**
+     * @async
      * @param {string} id 
      * @returns {Promise<User>}
      * @throws {InternalServerErrorException}

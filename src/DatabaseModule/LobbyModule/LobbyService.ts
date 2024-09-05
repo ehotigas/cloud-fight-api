@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, InternalServerErrorException, Logger, NotFoundException } from "@nestjs/common";
 import { ILoggerFactory } from "src/LoggerModule/LoggerFactory";
 import { CreateLobbyDto } from "./dto/CreateLobbyDto";
 import { UpdateLobbyDto } from "./dto/UpdateLobbyDto";
@@ -9,10 +9,47 @@ import { AppToken } from "src/AppToken";
 import { Lobby } from "./Lobby";
 
 export interface ILobbyService {
+    /**
+     * @async
+     * @returns {Promise<GetLobbyDto>}
+     * @throws {InternalServerErrorException}
+     */
     findAll: () => Promise<GetLobbyDto>
+
+    /**
+     * @async
+     * @param {string} id 
+     * @returns {Promise<Lobby>}
+     * @throws {InternalServerErrorException}
+     * @throws {NotFoundException}
+     */
     findById: (id: string) => Promise<Lobby>
+
+    /**
+     * @async
+     * @param {CreateLobbyDto} input 
+     * @returns {Promise<Lobby>}
+     * @throws {InternalServerErrorException}
+     */
     save: (input: CreateLobbyDto) => Promise<Lobby>
+
+    /**
+     * @async
+     * @param {string} id 
+     * @param {UpdateLobbyDto} input 
+     * @returns {Promise<Lobby>}
+     * @throws {InternalServerErrorException}
+     * @throws {NotFoundException}
+     */
     update: (id: string, input: UpdateLobbyDto) => Promise<Lobby>
+
+    /**
+     * @async
+     * @param {string} id 
+     * @returns {Promise<Lobby>}
+     * @throws {InternalServerErrorException}
+     * @throws {NotFoundException}
+     */
     remove: (id: string) => Promise<Lobby>
 }
 

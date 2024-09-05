@@ -6,10 +6,44 @@ import { Model } from "mongoose";
 import { Lobby } from "./Lobby";
 
 export interface ILobbyAdapter {
+    /**
+     * @async
+     * @returns {Lobby[]}
+     * @throws {InternalServerErrorException}
+     */
     findAll: () => Promise<Lobby[]>
+
+    /**
+     * @async
+     * @param {string} id 
+     * @returns {Promise<Lobby>}
+     * @throws {InternalServerErrorException}
+     */
     findById: (id: string) => Promise<Lobby>
+
+    /**
+     * @async
+     * @param {Omit<Lobby, "_id">} input 
+     * @returns {Promise<Lobby>}
+     * @throws {InternalServerErrorException}
+     */
     save: (input: Omit<Lobby, "_id">) => Promise<Lobby>
+
+    /**
+     * @async
+     * @param {string} id 
+     * @param {Partial<Lobby>} input 
+     * @returns {Promise<Lobby>}
+     * @throws {InternalServerErrorException}
+     */
     update: (id: string, input: Partial<Lobby>) => Promise<Lobby>
+
+    /**
+     * @async
+     * @param {string} id 
+     * @returns {Promise<Lobby>}
+     * @throws {InternalServerErrorException}
+     */
     remove: (id: string) => Promise<Lobby>
 }
 

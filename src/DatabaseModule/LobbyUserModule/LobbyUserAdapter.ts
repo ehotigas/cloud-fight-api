@@ -7,12 +7,14 @@ import { Model } from "mongoose";
 
 export interface ILobbyUserAdapter {
     /**
+     * @async
      * @returns {Promise<LobbyUser[]>}
      * @throws {InternalServerErrorException}
      */
     findAll: () => Promise<LobbyUser[]>
 
     /**
+     * @async
      * @param {string} id
      * @returns {Promise<LobbyUser>}
      * @throws {InternalServerErrorException}
@@ -20,6 +22,7 @@ export interface ILobbyUserAdapter {
     findById: (id: string) => Promise<LobbyUser>
 
     /**
+     * @async
      * @param {Omit<LobbyUser, "_id">} input
      * @returns {Promise<LobbyUser>}
      * @throws {InternalServerErrorException}
@@ -27,6 +30,7 @@ export interface ILobbyUserAdapter {
     save: (input: Omit<LobbyUser, "_id">) => Promise<LobbyUser>
 
     /**
+     * @async
      * @param {string} id
      * @param {Partial<LobbyUser>} input
      * @returns {Promise<LobbyUser>}
@@ -35,6 +39,7 @@ export interface ILobbyUserAdapter {
     update: (id: string, input: Partial<LobbyUser>) => Promise<LobbyUser>
 
     /**
+     * @async
      * @param {string} id
      * @returns {Promise<LobbyUser>}
      * @throws {InternalServerErrorException}

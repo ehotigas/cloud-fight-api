@@ -7,14 +7,14 @@ import { User } from "./User";
 
 export interface IUserAdapter {
     /**
-     * 
+     * @async
      * @returns {Promise<User[]>}
      * @throws {InternalServerErrorException}
      */
     findAll: () => Promise<User[]>
 
     /**
-     * 
+     * @async
      * @param {string} id
      * @returns {Promise<User>}
      * @throws {InternalServerErrorException}
@@ -22,7 +22,7 @@ export interface IUserAdapter {
     findById: (id: string) => Promise<User>
 
     /**
-     * 
+     * @async
      * @param {string} username 
      * @returns {Promise<User>}
      * @throws {InternalServerErrorException}
@@ -30,7 +30,7 @@ export interface IUserAdapter {
     findUsername: (username: string) => Promise<User>
 
     /**
-     * 
+     * @async
      * @param {string} email 
      * @returns {Promise<User>}
      * @throws {InternalServerErrorException}
@@ -38,7 +38,7 @@ export interface IUserAdapter {
     findByEmail: (email: string) => Promise<User>
 
     /**
-     * 
+     * @async
      * @param {Omit<User, "_id">} input 
      * @returns {Promise<User>}
      * @throws {InternalServerErrorException}
@@ -46,7 +46,7 @@ export interface IUserAdapter {
     save: (input: Omit<User, "_id">) => Promise<User>
 
     /**
-     * 
+     * @async
      * @param {string} id 
      * @param {Partial<User>} input 
      * @returns {Promise<User>}
