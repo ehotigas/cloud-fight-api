@@ -1,4 +1,4 @@
-import { BadRequestException, Inject, Injectable, Logger, NotFoundException, UnauthorizedException } from "@nestjs/common";
+import { BadRequestException, Inject, Injectable, InternalServerErrorException, Logger, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { CreateUserDto } from "../UserModule/dto/CreateUserDto";
 import { ILoggerFactory } from "src/LoggerModule/LoggerFactory";
 import { SignInResponseDto } from "./dto/SignInResponseDto";
@@ -10,7 +10,23 @@ import { IJwt } from "src/JwtModule/Jwt";
 import { AppToken } from "src/AppToken";
 
 export interface IAuthService {
+    /**
+     * @async
+     * @param {SignInDto} input 
+     * @returns {SignInResponseDto}
+     * @throws {InternalServerErrorException}
+     * @throws {NotFoundException}
+     * @throws {UnauthorizedException}
+     */
     signIn: (input: SignInDto) => Promise<SignInResponseDto>
+
+    /**
+     * @async
+     * @param {CreateUserDto} input 
+     * @returns {User}
+     * @throws {InternalServerErrorException}
+     * @throws {BadRequestException}
+     */
     signUp: (input: CreateUserDto) => Promise<User>
 }
 

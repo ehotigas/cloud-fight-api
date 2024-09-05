@@ -18,6 +18,7 @@ import {
     InternalServerErrorException,
     NotFoundException,
     Post,
+    UnauthorizedException,
     ValidationPipe
 } from "@nestjs/common";
 
@@ -35,6 +36,11 @@ export class AuthController {
         status: HttpStatus.OK,
         description: "Ok",
         type: SignInResponseDto
+    })
+    @ApiResponse({
+        status: HttpStatus.UNAUTHORIZED,
+        description: "Unauthorized",
+        type: UnauthorizedException
     })
     @ApiResponse({
         status: HttpStatus.NOT_FOUND,
