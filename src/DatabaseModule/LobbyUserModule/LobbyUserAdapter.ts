@@ -6,10 +6,39 @@ import { LobbyUser } from "./LobbyUser";
 import { Model } from "mongoose";
 
 export interface ILobbyUserAdapter {
+    /**
+     * @returns {Promise<LobbyUser[]>}
+     * @throws {InternalServerErrorException}
+     */
     findAll: () => Promise<LobbyUser[]>
+
+    /**
+     * @param {string} id
+     * @returns {Promise<LobbyUser>}
+     * @throws {InternalServerErrorException}
+     */
     findById: (id: string) => Promise<LobbyUser>
+
+    /**
+     * @param {Omit<LobbyUser, "_id">} input
+     * @returns {Promise<LobbyUser>}
+     * @throws {InternalServerErrorException}
+     */
     save: (input: Omit<LobbyUser, "_id">) => Promise<LobbyUser>
+
+    /**
+     * @param {string} id
+     * @param {Partial<LobbyUser>} input
+     * @returns {Promise<LobbyUser>}
+     * @throws {InternalServerErrorException}
+     */
     update: (id: string, input: Partial<LobbyUser>) => Promise<LobbyUser>
+
+    /**
+     * @param {string} id
+     * @returns {Promise<LobbyUser>}
+     * @throws {InternalServerErrorException}
+     */
     remove: (id: string) => Promise<LobbyUser>
 }
 
