@@ -6,12 +6,60 @@ import { Model } from "mongoose";
 import { User } from "./User";
 
 export interface IUserAdapter {
+    /**
+     * 
+     * @returns {Promise<User[]>}
+     * @throws {InternalServerErrorException}
+     */
     findAll: () => Promise<User[]>
+
+    /**
+     * 
+     * @param {string} id
+     * @returns {Promise<User>}
+     * @throws {InternalServerErrorException}
+     */
     findById: (id: string) => Promise<User>
+
+    /**
+     * 
+     * @param {string} username 
+     * @returns {Promise<User>}
+     * @throws {InternalServerErrorException}
+     */
     findUsername: (username: string) => Promise<User>
+
+    /**
+     * 
+     * @param {string} email 
+     * @returns {Promise<User>}
+     * @throws {InternalServerErrorException}
+     */
     findByEmail: (email: string) => Promise<User>
+
+    /**
+     * 
+     * @param {Omit<User, "_id">} input 
+     * @returns {Promise<User>}
+     * @throws {InternalServerErrorException}
+     */
     save: (input: Omit<User, "_id">) => Promise<User>
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {Partial<User>} input 
+     * @returns {Promise<User>}
+     * @throws {InternalServerErrorException}
+     */
     update: (id: string, input: Partial<User>) => Promise<User>
+
+    /**
+     * 
+     * @param {string} id 
+     * @returns {Promise<User>}
+     * @throws {InternalServerErrorException}
+     */
     remove: (id: string) => Promise<User>
 }
 

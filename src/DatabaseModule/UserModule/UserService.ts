@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, InternalServerErrorException, Logger, NotFoundException } from "@nestjs/common";
 import { ILoggerFactory } from "src/LoggerModule/LoggerFactory";
 import { CreateUserDto } from "./dto/CreateUserDto";
 import { UpdateUserDto } from "./dto/UpdateUserDto";
@@ -9,12 +9,58 @@ import { AppToken } from "src/AppToken";
 import { User } from "./User";
 
 export interface IUserService {
+    /**
+     * @returns {Promise<GetUserDto>}
+     * @throws {InternalServerErrorException}
+     */
     findAll: () => Promise<GetUserDto>
+
+    /**
+     * @param {string} id 
+     * @returns {Promise<User>}
+     * @throws {InternalServerErrorException}
+     * @throws {NotFoundException}
+     */
     findById: (id: string) => Promise<User>
+
+    /**
+     * @param {string} username 
+     * @returns {Promise<User>}
+     * @throws {InternalServerErrorException}
+     * @throws {NotFoundException}
+     */
     findUsername: (username: string) => Promise<User>
+
+    /**
+     * @param {string} email
+     * @returns {Promise<User>}
+     * @throws {InternalServerErrorException}
+     * @throws {NotFoundException}
+     */
     findByEmail: (email: string) => Promise<User>
+
+    /**
+     * @param {CreateUserDto} input 
+     * @returns {Promise<User>}
+     * @throws {InternalServerErrorException}
+     */
     save: (input: CreateUserDto) => Promise<User>
+
+    /**
+     * @param {string} id 
+     * @param {UpdateUserDto} input 
+     * @returns {Promise<User>}
+     * @throws {InternalServerErrorException}
+     * @throws {NotFoundException}
+     */
     update: (id: string, input: UpdateUserDto) => Promise<User>
+
+    /**
+     * @param {string} id 
+     * @returns {Promise<User>}
+     * @throws {InternalServerErrorException}
+     * @throws {NotFoundException}
+     */
     remove: (id: string) => Promise<User>
 }
 
