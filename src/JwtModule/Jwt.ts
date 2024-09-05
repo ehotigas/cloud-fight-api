@@ -3,8 +3,25 @@ import { JwtService } from "@nestjs/jwt";
 import { AppToken } from "src/AppToken";
 
 export declare class IJwt {
+    /**
+     * @async
+     * @param {string} payload 
+     * @returns {Promise<string>}
+     */
     signAsync(payload: string): Promise<string>;
+
+    /**
+     * @async
+     * @param {Buffer | object} payload 
+     * @returns {Promise<string>}
+     */
     signAsync(payload: Buffer | object): Promise<string>;
+
+    /**
+     * @async
+     * @param {string} token 
+     * @returns {Promise<T>}
+     */
     decode<T extends object>(token: string): Promise<T>;
 }
 

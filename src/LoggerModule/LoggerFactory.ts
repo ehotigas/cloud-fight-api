@@ -1,6 +1,10 @@
 import { Injectable, Logger } from "@nestjs/common";
 
 export interface ILoggerFactory {
+    /**
+     * @param {string} context 
+     * @returns {Logger}
+     */
     getLogger: (context: string) => Logger
 }
 
